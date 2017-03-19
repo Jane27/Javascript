@@ -16,6 +16,8 @@ a{
 }
 ul{
     padding: 0;
+    float:left ;
+    clear: both;
 }
 li{
     float: left;

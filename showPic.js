@@ -20,6 +20,7 @@ function addLoadEvent(func) {
 
 addLoadEvent(prepareGallery);
 //addLoadEvent(prepareLinks());
+addLoadEvent(preparePlaceholder);
 
 
 
@@ -67,6 +68,8 @@ addLoadEvent(prepareGallery);
 //         }
 //     }
 // }
+
+// deal with onClick
 function prepareGallery() {
     if (!document.getElementById) return false;
     if (!document.getElementsByTagName) return false;
@@ -102,7 +105,7 @@ function showPic(whichpic) {
         if(whichpic.getAttribute("title")) {
             var text = whichpic.getAttribute("title");
         }else {
-            var text="";
+            text="";
         }
         var description=document.getElementById("description");
         if (description.firstChild.nodeType == 3)
@@ -110,3 +113,51 @@ function showPic(whichpic) {
     }
     return true;
 }
+//deal with img and p element
+function preparePlaceholder() {
+    if (!document.createElement) return false;
+    if (!document.createTextNode) return false;
+    if(!document.getElementById) return false;
+    // if(!document.getElementById("imagegallery")) return false;
+    var div_description=document.createElement("div");
+    var placeholder=document.createElement("img");
+    placeholder.setAttribute("id","placeholder");
+    placeholder.setAttribute("src","images/placeholder.jpg");
+    placeholder.setAttribute("alt","my image gallery");
+
+    var description=document.createElement("p");
+    description.setAttribute("id","description");
+    var destxt= document.createTextNode("Choose an image");
+    description.appendChild(destxt);
+
+    div_description.appendChild(placeholder);
+    div_description.appendChild(description);
+
+   // document.getElementsByTagName("body")[0].appendChild(div_description);
+    var gallery=document.getElementById("imagegallery");
+
+    //description before gallery
+
+    // gallery.parentNode.insertBefore(div_description,gallery);
+
+    //description after gallery
+
+    insertAfter(div_description,gallery);
+
+}
+
+function insertAfter(newElement,targetElement) {
+
+    //parentElement
+    var parent = targetElement.parentNode;
+    // taget?=lastchild
+    if (parent.lastChild == targetElement) {
+        //inset to the next
+        parent.appendChild((newElement));
+    }else {
+        //insert between targetElement and his brother
+        parent.insertBefore(newElement,targetElement.nextSibling);
+    }
+
+}
+
